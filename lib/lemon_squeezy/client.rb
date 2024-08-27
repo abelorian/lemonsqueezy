@@ -14,7 +14,6 @@ module LemonSqueezy
           }
 
           conn.request :json
-
           conn.response :json
         end
       end
@@ -38,31 +37,31 @@ module LemonSqueezy
       def handle_response(response)
         case response.status
         when 400
-          raise Error, "Error 400: Your request was malformed. '#{response.body["errors"]}'"
+          raise Error.new("Error 400: Your request was malformed.", status: 400, error_details: response.body["errors"])
         when 401
-          raise Error, "Error 401: You did not supply valid authentication credentials. '#{response.body["errors"]}'"
+          raise Error.new("Error 401: You did not supply valid authentication credentials.", status: 401, error_details: response.body["errors"])
         when 403
-          raise Error, "Error 403: You are not allowed to perform that action. '#{response.body["errors"]}'"
+          raise Error.new("Error 403: You are not allowed to perform that action.", status: 403, error_details: response.body["errors"])
         when 404
-          raise Error, "Error 404: No results were found for your request. '#{response.body["errors"]}'"
+          raise Error.new("Error 404: No results were found for your request.", status: 404, error_details: response.body["errors"])
         when 409
-          raise Error, "Error 409: Your request was a conflict. '#{response.body["errors"]}'"
+          raise Error.new("Error 409: Your request was a conflict.", status: 409, error_details: response.body["errors"])
         when 429
-          raise Error, "Error 429: Your request exceeded the API rate limit. '#{response.body["errors"]}'"
+          raise Error.new("Error 429: Your request exceeded the API rate limit.", status: 429, error_details: response.body["errors"])
         when 422
-          raise Error, "Error 422: Unprocessable Entity. '#{response.body["errors"]}'"
+          raise Error.new("Error 422: Unprocessable Entity.", status: 422, error_details: response.body["errors"])
         when 500
-          raise Error, "Error 500: We were unable to perform the request due to server-side problems. '#{response.body["errors"]}'"
+          raise Error.new("Error 500: We were unable to perform the request due to server-side problems.", status: 500, error_details: response.body["errors"])
         when 503
-          raise Error, "Error 503: You have been rate limited for sending more than 20 requests per second. '#{response.body["errors"]}'"
+          raise Error.new("Error 503: You have been rate limited for sending more than 20 requests per second.", status: 503, error_details: response.body["errors"])
         when 501
-          raise Error, "Error 501: This resource has not been implemented. '#{response.body["errors"]}'"
+          raise Error.new("Error 501: This resource has not been implemented.", status: 501, error_details: response.body["errors"])
         when 204
           return true
         end
 
         if response.body && response.body["error"]
-          raise Error, "Error #{response.body["error"]["code"]} - #{response.body["errors"]["message"]}"
+          raise Error.new("Error #{response.body["error"]["code"]} - #{response.body["error"]["message"]}", status: response.status, error_details: response.body["error"])
         end
 
         response
