@@ -14,7 +14,7 @@ module LemonSqueezy
       end
 
       def order_items(id:)
-        response = Client.get_request("order-items", params: {order_id: id})
+        response = Client.get_request("order-items", params: {filter: {order_id: id}})
         Collection.from_response(response, type: OrderItem)
       end
 
