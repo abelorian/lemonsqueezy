@@ -29,6 +29,7 @@ module LemonSqueezy
   autoload :Product, "lemon_squeezy/models/product"
   autoload :Variant, "lemon_squeezy/models/variant"
   autoload :Order, "lemon_squeezy/models/order"
+  autoload :OrderItem, "lemon_squeezy/models/order_item"
   autoload :Subscription, "lemon_squeezy/models/subscription"
   autoload :SubscriptionInvoice, "lemon_squeezy/models/subscription_invoice"
   autoload :SubscriptionItem, "lemon_squeezy/models/subscription_item"
