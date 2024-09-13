@@ -118,7 +118,7 @@ LemonSqueezy::Order.list email: "hello@test.com"
 LemonSqueezy::Order.retrieve id: 123
 
 # Retrieves the items on an Order
-LemonSqueezy::Order.retrieve order_items: 123
+LemonSqueezy::Order.order_items id: 123
 ```
 
 ### Subscriptions
